@@ -3,10 +3,6 @@ import resolve from "@rollup/plugin-node-resolve";
 import pkg from "./package.json";
 
 const extensions = [".ts", ".tsx"];
-const external = [
-  ...Object.keys(pkg.devDependencies),
-  ...Object.keys(pkg.peerDependencies),
-];
 
 export default {
   input: ["src/index.ts"],
@@ -24,9 +20,13 @@ export default {
     }),
     babel({
       extensions,
-      babelHelpers: "inline",
+      // https://github.com/rollup/plugins/tree/master/packages/babel#babelhelpers
+      babelHelpers: "bundled",
       include: extensions.map((ext) => `src/**/*${ext}`),
     }),
   ],
-  external,
+  external: [
+    ...Object.keys(pkg.devDependencies),
+    ...Object.keys(pkg.peerDependencies),
+  ],
 };

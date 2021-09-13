@@ -1,24 +1,18 @@
 {
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "dist"],
   "compilerOptions": {
-    "target": "es6",
-    "module": "es6",
-    "lib": ["es5", "dom"],
-    "types": [],
-    "allowJs": false,
-    "jsx": "react",
-    "declaration": true,
-    "sourceMap": true,
-    "outDir": "dist",
-    "rootDir": "src",
-    "removeComments": true,
-    "strict": true,
-    "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
+    //
+    "jsx": "react",
+    // https://github.com/tsconfig/bases/blob/main/bases/recommended.json
+    "strict": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    //
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationMap": true,
+    "outDir": "dist/types"
   }
 }

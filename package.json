@@ -11,18 +11,17 @@
     "react"
   ],
   "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "prepublish": "npm run build",
-    "build": "rimraf dist && tsc --emitDeclarationOnly && rollup --config",
-    "tsc": "tsc",
+    "build": "rimraf dist && tsc && rollup --config",
     "test": "exit 0"
   },
   "files": [
     "dist/*"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Roey Biran",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.15.4",
