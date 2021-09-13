@@ -1,10 +1,15 @@
 {
   "name": "@roeybiran/every-layout-styled-components",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A styled-components implementation of every-layout.dev.",
   "publishConfig": {
     "access": "public"
   },
+  "keywords": [
+    "styled-components",
+    "every-layout",
+    "react"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
