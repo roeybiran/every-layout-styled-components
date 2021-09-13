@@ -1,3 +1,3 @@
 # every-layout-styled-components
 
-Based on [https://github.com/danscan/react-every-layout/](danscan/react-every-layout/).
+A styled-components implementation of [Every Layout](every-layout.dev).
