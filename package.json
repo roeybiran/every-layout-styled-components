@@ -6,7 +6,8 @@
   "scripts": {
     "prepublish": "npm run build",
     "build": "rimraf dist && tsc --emitDeclarationOnly && rollup --config",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "test": "exit 0"
   },
   "files": [
     "dist/*"
