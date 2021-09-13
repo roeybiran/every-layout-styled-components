@@ -4,9 +4,13 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
+    "prepublish": "npm run build",
     "build": "rimraf dist && tsc --emitDeclarationOnly && rollup --config",
     "tsc": "tsc"
   },
+  "files": [
+    "dist/*"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
