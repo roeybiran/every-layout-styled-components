@@ -10,12 +10,14 @@ const external = [
 
 export default {
   input: ["src/index.ts"],
-  output: {
-    dir: "dist",
-    sourcemap: true,
-    format: "esm",
-    preserveModules: true,
-  },
+  output: [
+    {
+      dir: "dist",
+      sourcemap: true,
+      format: "esm",
+      preserveModules: true,
+    },
+  ],
   plugins: [
     resolve({
       extensions,
