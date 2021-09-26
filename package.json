@@ -1,6 +1,6 @@
 {
   "name": "@roeybiran/every-layout-styled-components",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A styled-components implementation of every-layout.dev.",
   "publishConfig": {
     "access": "public"
