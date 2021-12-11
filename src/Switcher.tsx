@@ -2,32 +2,35 @@ import styled from "styled-components";
 
 // https://every-layout.dev/layouts/switcher/
 
-export interface SwitcherProps {
+type SwitcherProps = {
+  /** A CSS `width` value (representing the 'container breakpoint'). */
   threshold?: string;
+  /** A CSS `margin` value. */
   space?: string;
+  /** A number representing the maximum number of items permitted for a horizontal layout. */
   limit?: number;
-}
+};
 
-const Switcher = styled.div<SwitcherProps>`
+/** Switch directly between horizontal and vertical layouts at a given (container width-based) breakpoint or 'threshold'. */
+export const Switcher = styled.div<SwitcherProps>`
   display: flex;
   flex-wrap: wrap;
-  gap: ${({ space }) => space};
+
+  gap: ${(p) => p.space};
 
   > * {
+    flex-basis: calc((${(p) => p.threshold} - 100%) * 999);
     flex-grow: 1;
-    flex-basis: calc((${({ threshold }) => threshold} - 100%) * 999);
   }
 
-  > :nth-last-child(n + ${({ limit }) => limit! + 1}),
-  > :nth-last-child(n + ${({ limit }) => limit! + 1}) ~ * {
+  > :nth-last-child(n + ${(p) => p.limit! + 1}),
+  > :nth-last-child(n + ${(p) => p.limit! + 1}) ~ * {
     flex-basis: 100%;
   }
 `;
 
 Switcher.defaultProps = {
-  threshold: "60ch",
-  space: "1rem",
+  threshold: "var(--measure, 60ch)",
+  space: "var(--s1, 1.5rem)",
   limit: 4,
 };
-
-export default Switcher;

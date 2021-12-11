@@ -1,108 +1,117 @@
-import React, { useEffect, useRef } from "react";
-import styled from "styled-components";
+import React, { useEffect, useRef } from 'react';
+import styled from 'styled-components';
 
-type StyledReelProps = {
-  height?: string;
-  itemWidth?: string;
-  space?: string;
-  noBar?: boolean;
+type ReelProps = {
+	/** The width of each item (child element) in the Reel */
+	itemWidth?: string;
+	/** The space between Reel items (child elements) */
+	space?: string;
+	/** The height of the Reel itself */
+	height?: string;
+	/** Whether to display the scrollbar */
+	noBar?: boolean;
 };
 
-const StyledReel = styled.div<StyledReelProps>`
-  display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
+export const Reel = styled(_Reel)<ReelProps>`
+	display: flex;
+	overflow-x: auto;
+	overflow-y: hidden;
+	scrollbar-color: var(--color-light) var(--color-dark);
 
-  height: ${({ height }) => height};
+	> img {
+		height: 100%;
+		flex-basis: auto;
+		width: auto;
+	}
 
-  > * {
-    flex: 0 0 ${({ itemWidth }) => itemWidth};
-  }
+	::-webkit-scrollbar {
+		height: 1rem;
+	}
 
-  > figure > img,
-  > img {
-    height: 100%;
-    flex-basis: auto;
-    width: auto;
-  }
+	::-webkit-scrollbar-track {
+		background-color: var(--color-dark);
+	}
 
-  > * + * {
-    margin-inline-start: ${({ space }) => space};
-  }
+	::-webkit-scrollbar-thumb {
+		background-color: var(--color-dark);
+		background-image: linear-gradient(
+			var(--color-dark) 0,
+			var(--color-dark) 0.25rem,
+			var(--color-light) 0.25rem,
+			var(--color-light) 0.75rem,
+			var(--color-dark) 0.75rem
+		);
+	}
 
-  ${({ noBar, space }) =>
-    noBar
-      ? ""
-      : `
-  &.overflowing {
-    padding-bottom: ${space}
-  }
-`}
+	height: ${(p) => p.height};
 
-  ${({ noBar }) =>
-    noBar
-      ? `
+	> * {
+		flex: 0 0 ${(p) => p.itemWidth};
+	}
+
+	> * + * {
+		margin-inline-start: ${(p) => p.space};
+	}
+
+	&.overflowing {
+		${(p) => (p.noBar ? '' : `padding-block-end: ${p.space}`)}
+	}
+
+	${(p) =>
+		p.noBar
+			? `
     scrollbar-width: none;
 
     ::-webkit-scrollbar {
       display: none;
     }
-    `
-      : ""}
+		`
+			: ''}
 `;
 
-export type Props = Omit<
-  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-  "ref" | "height"
-> &
-  StyledReelProps & {
-    as?: keyof JSX.IntrinsicElements;
-  };
+type _Props = {
+	className?: string;
+	children?: React.ReactNode;
+};
 
-export default function Reel(props: Props) {
-  const reelRef = useRef<HTMLDivElement>(null);
+function _Reel({ className, children }: _Props) {
+	const reelRef = useRef<HTMLDivElement>(null);
 
-  const handleObserverCallback = () => {
-    if (!reelRef.current) return;
-    reelRef.current.classList.toggle(
-      "overflowing",
-      reelRef.current.scrollWidth > reelRef.current.clientWidth
-    );
-  };
+	const handleObserverCallback = () => {
+		if (!reelRef.current) return;
+		reelRef.current.classList.toggle(
+			'overflowing',
+			reelRef.current.scrollWidth > reelRef.current.clientWidth
+		);
+	};
 
-  useEffect(() => {
-    if (!reelRef.current) return;
-    let resizeObserver: ResizeObserver;
-    let mutationObserver: MutationObserver;
-    if ("ResizeObserver" in window) {
-      resizeObserver = new ResizeObserver(() => {
-        handleObserverCallback();
-      });
-      resizeObserver.observe(reelRef.current);
-    }
-    if ("MutationObserver" in window) {
-      mutationObserver = new MutationObserver(() => {
-        handleObserverCallback();
-      });
-      mutationObserver.observe(reelRef.current, { childList: true });
-    }
-    return function cleanup() {
-      resizeObserver?.disconnect();
-      mutationObserver?.disconnect();
-    };
-  }, []);
+	useEffect(() => {
+		if (!reelRef.current) return;
+		let resizeObserver: ResizeObserver;
+		let mutationObserver: MutationObserver;
 
-  return (
-    <StyledReel
-      className="reel"
-      itemWidth={props.itemWidth ?? "auto"}
-      space={props.space ?? "1rem"}
-      height={props.height ?? "auto"}
-      noBar={props.noBar ?? false}
-      //
-      as={props.as ?? "div"}
-      ref={reelRef}
-      {...props}
-    />
-  );
+		if ('ResizeObserver' in window) {
+			resizeObserver = new ResizeObserver(() => {
+				handleObserverCallback();
+			});
+			resizeObserver.observe(reelRef.current);
+		}
+
+		if ('MutationObserver' in window) {
+			mutationObserver = new MutationObserver(() => {
+				handleObserverCallback();
+			});
+			mutationObserver.observe(reelRef.current, { childList: true });
+		}
+		return function cleanup() {
+			resizeObserver?.disconnect();
+			mutationObserver?.disconnect();
+		};
+	}, []);
+
+	return (
+		<div ref={reelRef} className={className}>
+			{children}
+		</div>
+	);
 }

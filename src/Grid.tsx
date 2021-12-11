@@ -1,22 +1,28 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export interface GridProps {
-  minimum?: string;
-  space?: string;
-}
+type GridProps = {
+	/** A CSS length value representing x in `minmax(min(x, 100%), 1fr)`. */
+	min?: string;
+	/** The space between grid cells. */
+	space?: string;
+};
 
-const Grid = styled.div<GridProps>`
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(min(${({ minimum }) => minimum}, 100%), 1fr)
-  );
-  gap: ${({ space }) => space};
+/** A custom element for creating a responsive grid using the CSS Grid module. */
+export const Grid = styled.div<GridProps>`
+	display: grid;
+	gap: ${(p) => p.space};
+	align-content: start;
+	grid-template-columns: 100%;
+
+	@supports (width: min(${(p) => p.space}, 100%)) {
+		grid-template-columns: repeat(
+			auto-fill,
+			minmax(min(${(p) => p.min}, 100%), 1fr)
+		);
+	}
 `;
 
 Grid.defaultProps = {
-  minimum: "250px",
-  space: "1rem",
+	min: '250px',
+	space: 'var(--s1, 1.5rem)',
 };
-
-export default Grid;

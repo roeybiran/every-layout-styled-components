@@ -2,14 +2,12 @@
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    //
+    "module": "ES2020",
     "jsx": "react",
-    // https://github.com/tsconfig/bases/blob/main/bases/recommended.json
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    //
     "declaration": true,
     "emitDeclarationOnly": true,
     "declarationMap": true,

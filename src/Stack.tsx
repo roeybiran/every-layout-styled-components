@@ -1,41 +1,37 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export interface StackProps {
-  recursive?: boolean;
-  splitAfter?: number;
-  space?: string;
-}
+type StackProps = {
+	/** A CSS margin value. */
+	space?: string;
+	/** Whether the spaces apply recursively (i.e. regardless of nesting level). */
+	recursive?: boolean;
+	/** The element after which to split the stack with an auto margin. */
+	splitAfter?: number;
+};
 
-const Stack = styled.div<StackProps>`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+export const Stack = styled.div<StackProps>`
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
 
-  > * {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
+	${(p) => (p.recursive ? '' : '>')} * + * {
+		margin-block-start: ${(p) => p.space};
+	}
 
-  ${({ recursive }) => (recursive ? "" : ">")} * + * {
-    margin-top: ${({ space }) => space};
-  }
-
-  ${({ splitAfter }) =>
-    splitAfter
-      ? `
+	${(p) =>
+		p.splitAfter
+			? `
     :only-child {
       height: 100%;
     }
 
-    > :nth-child(${splitAfter}) {
+    > :nth-child(${p.splitAfter}) {
       margin-bottom: auto;
     }`
-      : ""}
+			: ''}
 `;
 
 Stack.defaultProps = {
-  recursive: false,
-  space: "1rem",
+	space: 'var(--s1, 1.5rem)',
+	recursive: false,
 };
-
-export default Stack;
