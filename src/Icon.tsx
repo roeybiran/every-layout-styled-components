@@ -8,7 +8,7 @@ type IconProps = {
 };
 
 /** A custom element for inline icon insertion */
-const Icon = styled.div.attrs<IconProps>((p) => ({
+export const Icon = styled.div.attrs<IconProps>((p) => ({
 	role: p.label ? 'img' : undefined,
 	ariaLabel: p.label,
 }))<IconProps>`
@@ -31,5 +31,3 @@ const Icon = styled.div.attrs<IconProps>((p) => ({
 	`
 			: ''}
 `;
-
-export default Icon;
