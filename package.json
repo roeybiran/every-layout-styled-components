@@ -1,7 +1,7 @@
 {
 	"name": "@roeybiran/every-layout-styled-components",
 	"version": "2.0.0",
-	"source": "src/*.tsx",
+	"source": "src/index.ts",
 	"files": [
 		"dist"
 	],
